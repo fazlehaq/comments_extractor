@@ -1,7 +1,7 @@
 #include<stdio.h>
 
 /*
-This is sample c program.
+This is sample c program. ***
 */
 
 int main(){

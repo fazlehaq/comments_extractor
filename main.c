@@ -13,20 +13,43 @@ int main(){
 	
 	char buffer[2];	
 	bool isOpeningCommentsFound = false;
-
+	bool isClosingCommentsFound = false;
 	// reading the file
 	size_t bytesRead;
 	while( (bytesRead = fread(buffer,2,1,fp)) != 0){
 		if(!isOpeningCommentsFound){
+//			printf("Looking for Opening Comments\n");
 			// here some codition arises 
 			// 1) If we found '/' and '*'
 			// 2) If we found some other char and '/'
-			// 3) If both of them ar not matched 
+			// 3) If both of them ar not matched
+		
+			if(buffer[0] == opening_comments[0] && buffer[1] == opening_comments[1]){
+				isOpeningCommentsFound = true;
+				printf("\n");
+				continue;
+			}
+			else if(buffer[0] != opening_comments[0] && buffer[1] == opening_comments[0]){
+				fseek(fp,-1,SEEK_CUR);
+				continue;
+			} 
+		}
+		else {
+			if(buffer[0] == closing_comments[0] && buffer[1] == closing_comments[1]){
+				isOpeningCommentsFound = false;
+				continue;
+			}
+			
+			else if(buffer[0] != closing_comments[0] && buffer[1] == closing_comments[0]){
+				printf("%c",buffer[0]);
+				fseek(fp,-1,SEEK_CUR);
+			}
+
+			else{
+				printf("%c%c",buffer[0],buffer[1]);
+			}	
 		}
 	}
 	
-
-
-
 	return 0;
 }
