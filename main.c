@@ -2,10 +2,18 @@
 #include<stdbool.h>
 
 int main(){
-	const char *filename = "source_code.c";
+	const char *filename = "source_code2.c";
 	const char *output_filename = "output.txt";
 	FILE *fp = fopen(filename,"rb");
 	FILE *out_fp = fopen(output_filename,"rb");
+	if(!fp) { 
+		printf("File %s not loaded\n",filename);
+		return 0;
+	}
+	if(!out_fp){
+		printf("File %s not loaded\n",output_filename);
+		return 0;
+	}
 	
 	// declaring the buffer
 	const char opening_comments[2] = {'/','*'};
@@ -18,7 +26,6 @@ int main(){
 	size_t bytesRead;
 	while( (bytesRead = fread(buffer,2,1,fp)) != 0){
 		if(!isOpeningCommentsFound){
-//			printf("Looking for Opening Comments\n");
 			// here some codition arises 
 			// 1) If we found '/' and '*'
 			// 2) If we found some other char and '/'
